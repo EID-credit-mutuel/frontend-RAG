@@ -1,13 +1,25 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { verifyKey } from '../services/api';
 
 export function LoginPage() {
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (password.trim()) login(password.trim());
+    if (!password.trim()) return;
+    setLoading(true);
+    setError(null);
+    const valid = await verifyKey(password.trim());
+    if (valid) {
+      login(password.trim());
+    } else {
+      setError('Mot de passe incorrect');
+    }
+    setLoading(false);
   }
 
   return (
@@ -18,15 +30,17 @@ export function LoginPage() {
         <p className="login-sub">Entrez le mot de passe pour accéder à l'application</p>
         <form className="login-form" onSubmit={handleSubmit}>
           <input
-            className="login-input"
+            className={`login-input ${error ? 'login-input--error' : ''}`}
             type="password"
             placeholder="Mot de passe"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={e => { setPassword(e.target.value); setError(null); }}
             autoFocus
+            disabled={loading}
           />
-          <button className="btn btn-primary login-btn" type="submit" disabled={!password.trim()}>
-            Accéder
+          {error && <span className="login-error">{error}</span>}
+          <button className="btn btn-primary login-btn" type="submit" disabled={!password.trim() || loading}>
+            {loading ? 'Vérification…' : 'Accéder'}
           </button>
         </form>
       </div>

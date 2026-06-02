@@ -11,13 +11,29 @@ function headers(provider: Provider): Record<string, string> {
   };
 }
 
+function checkStatus(res: Response, label: string) {
+  if (res.status === 401) {
+    sessionStorage.removeItem('rag-api-key');
+    window.dispatchEvent(new Event('rag-unauthorized'));
+    throw new Error('Session expirée');
+  }
+  if (!res.ok) throw new Error(`${label} failed: ${res.status}`);
+}
+
+export async function verifyKey(key: string): Promise<boolean> {
+  const res = await fetch(`${BASE_URL}/auth`, {
+    headers: { 'X-Api-Key': key },
+  });
+  return res.ok;
+}
+
 export async function ingest(text: string, provider: Provider): Promise<IngestResult> {
   const res = await fetch(`${BASE_URL}/ingest`, {
     method: 'POST',
     headers: headers(provider),
     body: JSON.stringify({ text }),
   });
-  if (!res.ok) throw new Error(`Ingest failed: ${res.status}`);
+  checkStatus(res, 'Ingest');
   return res.json();
 }
 
@@ -26,7 +42,7 @@ export async function reset(provider: Provider): Promise<void> {
     method: 'DELETE',
     headers: headers(provider),
   });
-  if (!res.ok) throw new Error(`Reset failed: ${res.status}`);
+  checkStatus(res, 'Reset');
 }
 
 export async function ask(question: string, provider: Provider): Promise<AskResult> {
@@ -35,6 +51,6 @@ export async function ask(question: string, provider: Provider): Promise<AskResu
     headers: headers(provider),
     body: JSON.stringify({ question }),
   });
-  if (!res.ok) throw new Error(`Ask failed: ${res.status}`);
+  checkStatus(res, 'Ask');
   return res.json();
 }
