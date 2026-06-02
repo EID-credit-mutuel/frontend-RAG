@@ -121,7 +121,16 @@ export function ChatTab() {
             <div className="empty-chat">
               <div className="empty-chat-icon">{wasReset ? '🧠' : '💬'}</div>
               <h3>{wasReset ? 'Oupsss j\'ai perdu ma mémoire court terme' : 'Commencez une conversation'}</h3>
-              <p>{wasReset ? 'La mémoire courte a été vidée. Vous pouvez ingérer de nouveaux documents dans la tab Configuration.' : 'Posez une question sur vos documents ingérés. Le système recherchera les passages pertinents et formulera une réponse.'}</p>
+              <p>{wasReset ? 'La mémoire courte a été vidée. Vous pouvez ingérer de nouveaux documents dans la tab Configuration.' : 'Posez une question sur vos documents ingérés.'}</p>
+              {!wasReset && (
+                <div className="suggestions">
+                  {['Qui est Jonathan ?', 'Quels sont les loisirs de Jonathan ?', 'Devons-nous le revoir en entretien ?'].map(q => (
+                    <button key={q} className="suggestion-chip" onClick={() => setInput(q)}>
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
