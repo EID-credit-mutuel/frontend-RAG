@@ -188,16 +188,24 @@ export function ChatTab() {
               ref={textareaRef}
               value={input}
               rows={1}
-              onChange={e => { setInput(e.target.value); autoResize(); }}
+              onChange={e => { setInput(e.target.value.slice(0, 1000)); autoResize(); }}
               onKeyDown={handleKeyDown}
               placeholder="Posez votre question…"
               disabled={busy}
+              maxLength={1000}
             />
             <button className="send-btn" onClick={handleSend} disabled={!input.trim() || busy}>
               ↑
             </button>
           </div>
-          <div className="input-hint">Entrée pour envoyer · Shift+Entrée pour saut de ligne</div>
+          <div className="input-hint">
+            Entrée pour envoyer · Shift+Entrée pour saut de ligne
+            {input.length >= 900 && (
+              <span style={{ color: input.length === 1000 ? 'var(--red)' : 'var(--text-dim)', marginLeft: '0.5rem' }}>
+                {input.length === 1000 ? '⚠️ Limite atteinte (1000 car.)' : `${input.length}/1000`}
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>

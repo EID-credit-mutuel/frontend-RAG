@@ -79,11 +79,17 @@ export function ConfigTab() {
             <textarea
               className="doc-input"
               value={text}
-              onChange={e => setText(e.target.value)}
+              onChange={e => setText(e.target.value.slice(0, 5000))}
               placeholder="Collez ou tapez votre document ici…"
               rows={8}
               disabled={loading}
+              maxLength={5000}
             />
+            {text.length >= 4500 && (
+              <div style={{ fontSize: '0.72rem', color: text.length === 5000 ? 'var(--red)' : 'var(--text-dim)' }}>
+                {text.length === 5000 ? '⚠️ Limite atteinte (5000 car.) — document tronqué' : `${text.length}/5000 caractères`}
+              </div>
+            )}
             <button
               className="btn btn-primary"
               onClick={handleIngest}
