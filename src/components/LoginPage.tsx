@@ -13,13 +13,18 @@ export function LoginPage() {
     if (!password.trim()) return;
     setLoading(true);
     setError(null);
-    const valid = await verifyKey(password.trim());
-    if (valid) {
-      login(password.trim());
-    } else {
-      setError('Mot de passe incorrect');
+    try {
+      const valid = await verifyKey(password.trim());
+      if (valid) {
+        login(password.trim());
+      } else {
+        setError('Mot de passe incorrect');
+      }
+    } catch {
+      setError('Erreur de connexion au serveur');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
