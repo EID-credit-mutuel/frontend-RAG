@@ -19,6 +19,8 @@ export function ConfigTab() {
       await reset(provider);
       setLogs([]);
       sessionStorage.removeItem('rag-chat-history');
+      sessionStorage.setItem('rag-was-reset', 'true');
+      window.dispatchEvent(new Event('rag-reset'));
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Erreur inconnue');
     } finally {

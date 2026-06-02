@@ -24,6 +24,11 @@ export function ChatTab() {
   const [step, setStep] = useState<Step>('idle');
   const [error, setError] = useState<string | null>(null);
   const [showMeta, setShowMeta] = useState<Record<number, boolean>>({});
+  const [wasReset, setWasReset] = useState(() => {
+    const flag = sessionStorage.getItem('rag-was-reset');
+    if (flag) { sessionStorage.removeItem('rag-was-reset'); return true; }
+    return false;
+  });
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { provider } = useProvider();
@@ -32,6 +37,12 @@ export function ChatTab() {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  useEffect(() => {
+    function onReset() { setMessages([]); setWasReset(true); }
+    window.addEventListener('rag-reset', onReset);
+    return () => window.removeEventListener('rag-reset', onReset);
+  }, []);
 
   function autoResize() {
     const el = textareaRef.current;
@@ -108,9 +119,9 @@ export function ChatTab() {
         <div className="messages-area">
           {messages.length === 0 && (
             <div className="empty-chat">
-              <div className="empty-chat-icon">💬</div>
-              <h3>Commencez une conversation</h3>
-              <p>Posez une question sur vos documents ingérés. Le système recherchera les passages pertinents et formulera une réponse.</p>
+              <div className="empty-chat-icon">{wasReset ? '🧠' : '💬'}</div>
+              <h3>{wasReset ? 'Oupsss j\'ai perdu ma mémoire court terme' : 'Commencez une conversation'}</h3>
+              <p>{wasReset ? 'La mémoire courte a été vidée. Vous pouvez ingérer de nouveaux documents dans la tab Configuration.' : 'Posez une question sur vos documents ingérés. Le système recherchera les passages pertinents et formulera une réponse.'}</p>
             </div>
           )}
 
