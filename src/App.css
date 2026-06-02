@@ -1116,8 +1116,8 @@ textarea.doc-input::placeholder { color: var(--text-dim); }
   .cv-layout { padding: 1.25rem 0.75rem; }
 }
 
-/* Écrans < 950px de hauteur (1080p avec chrome navigateur) */
-@media (max-height: 950px) {
+/* Écrans < 1050px de hauteur (1080p avec chrome navigateur) */
+@media (max-height: 1050px) {
   .home-content { gap: 1rem; }
   .home-layout { padding: 1.25rem 4rem; }
   .home-intro { gap: 0.35rem; }
