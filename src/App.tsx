@@ -24,7 +24,7 @@ export default function App() {
         <div className="sidebar-brand" style={{ cursor: 'pointer' }} onClick={() => setTab('home')}>
           <div className="sidebar-brand-icon">⚡</div>
           <div className="sidebar-brand-name">
-            EID RAG <span>Chat</span>
+            AskJo <span>RAG demo pour EID</span>
           </div>
         </div>
 
@@ -43,7 +43,7 @@ export default function App() {
           onClick={() => setTab('chat')}
         >
           <span className="nav-item-icon">💬</span>
-          Jonathan Chat
+          AskJo
         </button>
 
         <button
@@ -51,14 +51,14 @@ export default function App() {
           onClick={() => setTab('config')}
         >
           <span className="nav-item-icon">⚙️</span>
-          Configuration
+          Configuration AskJo
         </button>
 
         <button
           className={`nav-item ${tab === 'cv' ? 'active' : ''}`}
           onClick={() => setTab('cv')}
         >
-          <span className="nav-item-icon">👤</span>
+          <span className="nav-item-icon">📋</span>
           Mon CV
         </button>
 

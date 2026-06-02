@@ -31,7 +31,7 @@ export function LoginPage() {
     <div className="login-layout">
       <div className="login-card">
         <div className="login-icon">⚡</div>
-        <h1 className="login-title">EID RAG Chat</h1>
+        <h1 className="login-title">AskJo</h1>
         <p className="login-sub">Entrez le mot de passe pour accéder à l'application</p>
         <form className="login-form" onSubmit={handleSubmit}>
           <input

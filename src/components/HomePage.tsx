@@ -1,4 +1,6 @@
-type Tab = 'home' | 'chat' | 'config';
+import { ArchDiagram } from './ArchDiagram';
+
+type Tab = 'home' | 'chat' | 'config' | 'cv';
 
 interface Props {
   onNavigate: (tab: Tab) => void;
@@ -10,30 +12,26 @@ export function HomePage({ onNavigate }: Props) {
       <div className="home-content">
 
         <div className="home-intro">
-          <div className="home-badge">Projet vitrine RAG</div>
-          <h1 className="home-title">EID RAG Chat</h1>
+          <div className="home-badge">POC RAG · kNN · Embedding · LLM · Vector Store</div>
+          <h1 className="home-title">AskJo <span style={{ color: 'var(--text-muted)', fontWeight: 400, fontSize: '1rem' }}>RAG demo pour EID</span></h1>
           <p className="home-desc">
-            Bonjour, je suis <span className="home-highlight">Jonathan Ehrhard</span>, développeur Full-Stack C# / React avec 6 ans d'expérience.
-            J'ai conçu cette application de bout en bout pour l'entretien technique EID — elle démontre ma maîtrise du pattern{' '}
-            <span className="home-highlight">Retrieval-Augmented Generation</span> :
-            chunking token-aware, vectorisation via Mistral Embed, stockage et recherche kNN dans Elasticsearch,
-            puis génération de réponse contextuelle par un LLM (Mistral ou Claude Opus).
-            L'ensemble est déployé sur un VPS Ionos sous Docker avec reverse proxy Caddy et TLS automatique,
-            le frontend est publié sur GitHub Pages via CI/CD GitHub Actions.
+            Suite à notre entretien, j'ai reçu un retour sur un manque d'approfondissement technique. Deux solutions s'offraient à moi : attendre et postuler à de nouvelles offres pour la Cognitive Factory, ou agir et vous démontrer concrètement mes capacités techniques.
+          </p>
+          <p className="home-desc">
+            J'ai développé ce POC RAG : un front-end React hébergé sur GitHub Pages, un back-end C# avec middleware d'authentification, connecté à une base Elasticsearch hébergée sur un VPS. Il couvre l'embedding, la tokenisation, la recherche par similarité cosinus et l'intégration multi-LLM. J'ai intégré <span className="home-highlight">Mistral</span> car c'est le modèle que vous utilisez chez EID, et <span className="home-highlight">Claude</span> en complément pour mettre en place un design pattern Factory. <strong>Une réalisation vaut plus que des mots.</strong>
+          </p>
+          <p className="home-desc">
+            Ce projet est une base, je compte approfondir :<br />
+            * Le RAG agentique (laisser le modèle raisonner et agir en continu plutôt qu'un simple cycle demande → réponse)<br />
+            * La gestion de queues avec Kafka et les architectures multi-utilisateurs
           </p>
 
-          <div className="home-stack">
-            <div className="stack-item"><span className="stack-icon">⚛️</span><span>React 19 + Vite 8</span></div>
-            <div className="stack-item"><span className="stack-icon">⚙️</span><span>.NET 8 RAG API</span></div>
-            <div className="stack-item"><span className="stack-icon">🖥️</span><span>VPS Ionos · Docker · Caddy TLS</span></div>
-            <div className="stack-item"><span className="stack-icon">🗄️</span><span>Elasticsearch 9 · kNN</span></div>
-            <div className="stack-item"><span className="stack-icon">🟣</span><span>Claude Opus (chat)</span></div>
-            <div className="stack-item"><span className="stack-icon">🟠</span><span>Mistral Embed + Chat</span></div>
-            <div className="stack-item"><span className="stack-icon">🏗️</span><span>Pattern Strategy + Factory</span></div>
-            <div className="stack-item"><span className="stack-icon">🔍</span><span>Similarité cosinus · Chunking · Tokenisation</span></div>
-          </div>
         </div>
 
+        <div className="home-section-label">Architecture mise en place</div>
+        <ArchDiagram />
+
+        <div className="home-section-label">Actions que vous pouvez réaliser</div>
         <div className="home-sections home-sections--compact">
           <div className="home-section">
             <div className="home-section-header">
@@ -56,7 +54,7 @@ export function HomePage({ onNavigate }: Props) {
             <div className="home-section-header">
               <span className="home-section-icon">💬</span>
               <div>
-                <div className="home-section-title">Discuter avec l'IA Jonathan</div>
+                <div className="home-section-title">Discuter avec AskJo</div>
                 <div className="home-section-sub">Une fois les documents ingérés</div>
               </div>
             </div>
@@ -66,6 +64,22 @@ export function HomePage({ onNavigate }: Props) {
             </p>
             <button className="home-btn home-btn-secondary" onClick={() => onNavigate('chat')}>
               <span>💬</span> Ouvrir le chat
+            </button>
+          </div>
+
+          <div className="home-section">
+            <div className="home-section-header">
+              <span className="home-section-icon">📋</span>
+              <div>
+                <div className="home-section-title">Mon CV</div>
+                <div className="home-section-sub">Profil & expériences</div>
+              </div>
+            </div>
+            <p className="home-section-desc">
+              Développeur Full-Stack C# / React avec 6 ans d'expérience. Retrouvez mon parcours, mes compétences et mes projets personnels.
+            </p>
+            <button className="home-btn home-btn-secondary" onClick={() => onNavigate('cv')}>
+              <span>📋</span> Revoir mon CV
             </button>
           </div>
         </div>

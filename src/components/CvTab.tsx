@@ -2,7 +2,10 @@ export function CvTab() {
   return (
     <div className="cv-layout">
       <div className="cv-header">
-        <div>
+        <div className="cv-photo-wrap">
+          <img src="/photo.jpg" alt="Jonathan Ehrhard" className="cv-photo" />
+        </div>
+        <div style={{ flex: 1 }}>
           <h1 className="cv-name">Jonathan Ehrhard</h1>
           <div className="cv-title">Analyste Développeur Full-Stack C# / React · 6 années d'exp.</div>
           <div className="cv-contacts">
@@ -10,6 +13,14 @@ export function CvTab() {
             <span>✉️ ehrhard.jonathan@gmail.com</span>
             <span>📍 Illkirch-Graffenstaden, France</span>
           </div>
+          <a
+            href="/CV_EHRHARD_Jonathan_2026.pdf"
+            download="CV_EHRHARD_Jonathan_2026.pdf"
+            className="btn btn-primary"
+            style={{ marginTop: '0.75rem', textDecoration: 'none', display: 'inline-flex' }}
+          >
+            ⬇️ Télécharger le CV
+          </a>
         </div>
       </div>
 

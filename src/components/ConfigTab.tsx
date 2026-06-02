@@ -44,7 +44,7 @@ export function ConfigTab() {
     <div className="page-body">
       <div className="page-header">
         <div>
-          <div className="page-title">Configuration</div>
+          <div className="page-title">Configuration AskJo</div>
           <div className="page-subtitle">Gérez les documents de la base de connaissances</div>
         </div>
         <button
@@ -57,6 +57,16 @@ export function ConfigTab() {
       </div>
 
       <div className="config-layout">
+        <div className="memory-info">
+          <div className="memory-item">
+            <span className="memory-badge memory-badge--seed">🌱 Mémoire longue</span>
+            <span className="memory-desc">Données permanentes pré-chargées (mon CV, mon profil). Non modifiables.</span>
+          </div>
+          <div className="memory-item">
+            <span className="memory-badge memory-badge--user">📝 Mémoire courte</span>
+            <span className="memory-desc">Documents que vous ingérez. Vous pouvez en ajouter et les supprimer via le bouton "Vider la base" en haut à droite.</span>
+          </div>
+        </div>
         <div className="card">
           <div className="card-header">
             <span>📄</span>

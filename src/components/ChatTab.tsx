@@ -91,7 +91,7 @@ export function ChatTab() {
     <div className="page-body">
       <div className="page-header">
         <div>
-          <div className="page-title">Jonathan Chat for EID</div>
+          <div className="page-title">AskJo</div>
           <div className="page-subtitle">RAG sur vos documents internes</div>
         </div>
         {messages.length > 0 && (
