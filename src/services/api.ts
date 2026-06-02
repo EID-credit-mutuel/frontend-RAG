@@ -12,11 +12,7 @@ function headers(provider: Provider): Record<string, string> {
 }
 
 function checkStatus(res: Response, label: string) {
-  if (res.status === 401) {
-    sessionStorage.removeItem('rag-api-key');
-    window.dispatchEvent(new Event('rag-unauthorized'));
-    throw new Error('Session expirée');
-  }
+  if (res.status === 401) throw new Error('Mot de passe invalide');
   if (!res.ok) throw new Error(`${label} failed: ${res.status}`);
 }
 

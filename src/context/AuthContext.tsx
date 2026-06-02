@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 const SESSION_KEY = 'rag-api-key';
 
@@ -24,11 +24,6 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
     sessionStorage.removeItem(SESSION_KEY);
     setApiKey(null);
   }
-
-  useEffect(() => {
-    window.addEventListener('rag-unauthorized', logout);
-    return () => window.removeEventListener('rag-unauthorized', logout);
-  }, []);
 
   return <Ctx.Provider value={{ apiKey, login, logout }}>{children}</Ctx.Provider>;
 }
