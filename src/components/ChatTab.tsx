@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { ask } from '../services/api';
 import { useProvider } from '../context/ProviderContext';
 import type { Message, Step, MessageMeta } from '../types';
@@ -131,7 +132,7 @@ export function ChatTab() {
                 {msg.role === 'user' ? 'J' : '⚡'}
               </div>
               <div className="message-content">
-                <div className="bubble">{msg.content}</div>
+                <div className="bubble"><ReactMarkdown>{msg.content}</ReactMarkdown></div>
                 {msg.meta && (
                   <>
                     <button className="sources-toggle" onClick={() => toggleMeta(i)}>
