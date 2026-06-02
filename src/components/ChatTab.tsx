@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { ask } from '../services/api';
 import { useProvider } from '../context/ProviderContext';
 import type { Message, Step, MessageMeta } from '../types';
@@ -132,7 +131,7 @@ export function ChatTab() {
                 {msg.role === 'user' ? 'J' : '⚡'}
               </div>
               <div className="message-content">
-                <div className="bubble"><ReactMarkdown>{msg.content}</ReactMarkdown></div>
+                <div className="bubble" dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }} />
                 {msg.meta && (
                   <>
                     <button className="sources-toggle" onClick={() => toggleMeta(i)}>
@@ -198,4 +197,17 @@ export function ChatTab() {
 
 function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function renderMarkdown(text: string): string {
+  return text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+    .replace(/\n/g, '<br/>');
 }
